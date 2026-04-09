@@ -1,0 +1,178 @@
+/* ===== CSS Reset ===== */
+
+/* Remove default margin, padding, and border */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set consistent font inheritance */
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  line-height: 1.5;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-mono);
+}
+
+/* Remove list styles */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Remove default link styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Make images behave consistently */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Remove default form element styles */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+/* ===== Actual Styles ===== */
+
+:root {
+  /* Surfaces */
+  --bg-base: #080c10;
+  --bg-surface: #0e1318;
+  --bg-elevated: #141b22;
+  --bg-overlay: #1a2330;
+
+  /* Borders */
+  --border-subtle: #1e2a35;
+  --border-default: #243040;
+  --border-strong: #2e3d50;
+
+  /* Text */
+  --text-primary: #d9e8f5;
+  --text-secondary: #7a9bb5;
+  --text-muted: #445c72;
+  --text-inverse: #080c10;
+
+  /* Accent — warm amber */
+  --accent: #e8a020;
+  --accent-bright: #ffb830;
+  --accent-dim: #7a5210;
+  --accent-glow: rgba(232, 160, 32, 0.15);
+
+  /* Semantic */
+  --success: #2ea876;
+  --success-glow: rgba(46, 168, 118, 0.15);
+  --danger: #e84040;
+  --danger-glow: rgba(232, 64, 64, 0.15);
+  --info: #3a8fd4;
+  --info-glow: rgba(58, 143, 212, 0.15);
+
+  /* Typography */
+  --font-display: "Syne", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Radii */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --glow-accent: 0 0 20px rgba(232, 160, 32, 0.2);
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+.algo-sel {
+  display: flex;
+  gap: 1rem;
+}
+
+.panel {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.panel__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-overlay);
+}
+
+.panel__title {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.panel__body {
+  padding: var(--space-4);
+}
+
+.start-button {
+  text-transform: uppercase;
+  padding: var(--space-3) var(--space-10);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--success);
+  font-size: large;
+  cursor: pointer;
+  transition: background 0.2s ease-out;
+
+  &:hover {
+    background-color: var(--success-glow);
+  }
+}
