@@ -1,5 +1,7 @@
 /* ===== CSS Reset ===== */
 
+@import './gantt.css';
+
 /* Remove default margin, padding, and border */
 * {
   margin: 0;
