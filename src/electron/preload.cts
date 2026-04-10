@@ -1,4 +1,3 @@
-/*
 const { contextBridge, ipcRenderer } = require('electron');
 
 export function ipcRendererInvoke<Key extends keyof EventPayloadMapping>(
@@ -20,24 +19,21 @@ export function ipcRendererOn<Key extends keyof EventPayloadMapping>(
 
 export function ipcRendererSend<Key extends keyof EventPayloadMapping>(
     key: Key,
-    payload: EventPayloadMapping[Key],
+    payload?: EventPayloadMapping[Key],
 ) {
     ipcRenderer.send(key, payload);
 }
 
 contextBridge.exposeInMainWorld('api', {
-    subscribeStatistics: (callback) =>
-        ipcRendererOn('statistics', (stats) => {
-            callback(stats);
-        }),
-    getStaticData: () => ipcRendererInvoke('getStaticData'),
-    subscribeChangeView: (callback) =>
-        ipcRendererOn('changeView', (view) => {
-            callback(view);
-        }),
-    platform: process.platform,
-    sendFrameAction: (payload) => {
-        ipcRendererSend('sendFrameAction', payload);
-    },
+    initScheduler: () => ipcRendererSend('scheduler:init'),
+    addSchedulerProcess: (p) => ipcRendererSend('scheduler:add', p),
+    startScheduler: () => ipcRendererSend('scheduler:start'),
+    stopScheduler: () => ipcRendererSend('scheduler:stop'),
+    runSchedulerToEnd: () => ipcRendererSend('scheduler:runToEnd'),
+    subscribeScheduler: (cb) => ipcRendererOn('scheduler:update', (state) => cb(state)),
+    removeSchedulerProcess: (index) => ipcRendererSend('scheduler:remove', index),
+    // pauseScheduler: () => ipcRendererSend('scheduler:pause', undefined),
+    setSchedulingAlgorithm: (algorithm) =>
+        ipcRendererSend('scheduler:setAlgorithm', algorithm),
+    setSchedulingQuantum: (quantum) => ipcRendererSend('scheduler:setQuantum', quantum),
 } satisfies Window['api']);
-*/

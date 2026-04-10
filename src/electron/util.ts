@@ -1,14 +1,11 @@
-/*
 import { ipcMain, WebContents, WebFrameMain } from 'electron';
 import { pathToFileURL } from 'url';
 import { getUiPath } from './pathResolver.js';
-*/
 
 export function isDev(): boolean {
     return process.env.NODE_ENV === 'development';
 }
 
-/*
 export function ipcMainHandle<Key extends keyof EventPayloadMapping>(
     key: Key,
     handler: (payload: EventPayloadMapping[Key]) => unknown,
@@ -42,4 +39,3 @@ export function validateEventFrame(frame: WebFrameMain | null) {
     if (frame?.url === pathToFileURL(getUiPath()).toString()) return;
     throw new Error('Malicious Event');
 }
-*/

@@ -1,12 +1,31 @@
 import { useScheduler } from './SchedulingContext';
 
 export default function StartButton() {
-   const { started, setStarted } = useScheduler();
+   const { started, start, stop, paused, runToEnd, state, reset } = useScheduler();
+   const isFinished = state?.processes.every((p) => p.remainingTime <= 0) ?? false;
 
-   if (started) return <></>;
+   if (isFinished)
+      return (
+         <button className="button danger" onClick={reset}>
+            Reset
+         </button>
+      );
    return (
-      <button className="start-button" onClick={() => setStarted(true)}>
-         Start
-      </button>
+      <>
+         {started && !paused ? (
+            <button className="button info" onClick={stop}>
+               Pause
+            </button>
+         ) : (
+            <>
+               <button className="button success" onClick={start}>
+                  {paused ? 'Resume' : 'Start'}
+               </button>
+               <button className="button info" onClick={runToEnd}>
+                  Run Without Live
+               </button>
+            </>
+         )}
+      </>
    );
 }

@@ -3,10 +3,30 @@ type Process = {
     burstTime: number;
     remainingTime: number;
     priority?: number;
-    startTime?: number;
     finishTime?: number;
-    // waitingTime: number;
-    // turnaroundTime: number;
+    // remainingQuantum?: number;
+    // waitingTime?: number;
+    // turnaroundTime?: number;
+};
+
+type ProcessWithId = Process & {
+    pid: number;
 };
 
 type SchedulingAlgorithm = 'fcfs' | 'sjf' | 'srtf' | 'rr' | 'pr' | 'ppr';
+
+type AlgorithmFunc = (
+    processes: ProcessWithId[],
+    currentTime: number,
+    // quantum: number,
+    lastProcessId?: number,
+    // currentQuantumTime: number,
+) => number;
+
+type SchedulerState = {
+    processes: ProcessWithId[];
+    timeline: { pid: number; from: number; to: number }[];
+    currentTime: number;
+    avgWait: number;
+    avgTurn: number;
+};

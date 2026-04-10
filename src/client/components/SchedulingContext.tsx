@@ -1,27 +1,43 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type SchedulingContextType = {
-   processes: Process[];
-   addProcess: (p: Process) => void;
-   removeProcess: (i: number) => void;
+   state: SchedulerState | null;
+
+   // local UI state
    algorithm: SchedulingAlgorithm;
    setAlgorithm: React.Dispatch<React.SetStateAction<SchedulingAlgorithm>>;
    quantum: number;
    setQuantum: React.Dispatch<React.SetStateAction<number>>;
    started: boolean;
-   setStarted: React.Dispatch<React.SetStateAction<boolean>>;
+   paused: boolean;
+
+   // scheduler controls
+   start: () => void;
+   stop: () => void;
+   reset: () => void;
+   runToEnd: () => void;
+
+   addProcess: (p: Process) => void;
+   removeProcess: (i: number) => void;
 };
 
 const SchedulingContext = createContext<SchedulingContextType>({
-   processes: [],
-   addProcess: () => {},
-   removeProcess: () => {},
+   state: null,
+
    algorithm: 'fcfs',
    setAlgorithm: () => {},
    quantum: 1,
    setQuantum: () => {},
    started: false,
-   setStarted: () => {},
+   paused: false,
+
+   start: () => {},
+   stop: () => {},
+   reset: () => {},
+   runToEnd: () => {},
+
+   addProcess: () => {},
+   removeProcess: () => {},
 });
 
 export const useScheduler = () => useContext(SchedulingContext);
@@ -29,33 +45,71 @@ export const useScheduler = () => useContext(SchedulingContext);
 export const SchedulingProvider: React.FC<{ children: React.ReactNode }> = ({
    children,
 }) => {
-   const [started, setStarted] = useState(false);
-   const [processes, setProcesses] = useState<Process[]>([]);
+   const [state, setState] = useState<SchedulerState | null>(null);
+
+   // UI state
    const [algorithm, setAlgorithm] = useState<SchedulingAlgorithm>('fcfs');
    const [quantum, setQuantum] = useState(1);
+   const [started, setStarted] = useState(false);
+   const [paused, setPaused] = useState(false);
 
-   function addProcess(p: Process) {
-      setProcesses((prev) => [...prev, p]);
-   }
+   useEffect(() => {
+      window.api.initScheduler();
+      return window.api.subscribeScheduler(setState);
+   }, []);
 
-   function removeProcess(i: number) {
-      setProcesses((prev) => prev.filter((_, idx) => idx !== i));
-   }
+   useEffect(() => {
+      window.api.setSchedulingAlgorithm(algorithm);
+   }, [algorithm]);
+
+   useEffect(() => {
+      window.api.setSchedulingQuantum(quantum);
+   }, [quantum]);
+
+   const start = () => {
+      setStarted(true);
+      setPaused(false);
+      window.api.startScheduler();
+   };
+
+   const runToEnd = () => {
+      setStarted(true);
+      setPaused(false);
+      window.api.runSchedulerToEnd();
+   };
+
+   const stop = () => {
+      setPaused(true);
+      window.api.stopScheduler();
+   };
+
+   const reset = () => {
+      setStarted(false);
+      window.api.initScheduler();
+      setState(null);
+      setAlgorithm('fcfs');
+      setQuantum(1);
+      return window.api.subscribeScheduler(setState);
+   };
 
    return (
       <SchedulingContext.Provider
          value={{
-            processes,
-            addProcess,
-            removeProcess,
-
+            state,
             algorithm,
             setAlgorithm,
             quantum,
             setQuantum,
-
             started,
-            setStarted,
+            paused,
+
+            start,
+            stop,
+            reset,
+            runToEnd,
+
+            addProcess: window.api.addSchedulerProcess,
+            removeProcess: window.api.removeSchedulerProcess,
          }}
       >
          {children}

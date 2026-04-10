@@ -32,3 +32,43 @@ interface Window {
     };
 }
 */
+
+export type SchedulerAddPayload = Process;
+
+type SchedulerContext = {
+    lastPid: number | null;
+    currentQuantum: number;
+    quantum: number;
+};
+
+type PickNextFn = (queue: ProcessWithId[], ctx: SchedulerContext) => ProcessWithId | null;
+
+declare global {
+    interface EventPayloadMapping {
+        'scheduler:init': SchedulerInitPayload;
+        'scheduler:add': SchedulerAddPayload;
+        'scheduler:start': void;
+        'scheduler:stop': void;
+        'scheduler:runToEnd': void;
+        'scheduler:update': SchedulerState;
+        'scheduler:remove': number;
+        // 'scheduler:pause': void;
+        'scheduler:setQuantum': number;
+        'scheduler:setAlgorithm': SchedulingAlgorithm;
+    }
+
+    interface Window {
+        api: {
+            initScheduler: () => void;
+            addSchedulerProcess: (p: Process) => void;
+            startScheduler: () => void;
+            stopScheduler: () => void;
+            runSchedulerToEnd: () => void;
+            subscribeScheduler: (cb: (state: SchedulerState) => void) => () => void;
+            removeSchedulerProcess: (index: number) => void;
+            // pauseScheduler: () => void;
+            setSchedulingAlgorithm: (payload: SchedulingAlgorithm) => void;
+            setSchedulingQuantum: (payload: number) => void;
+        };
+    }
+}

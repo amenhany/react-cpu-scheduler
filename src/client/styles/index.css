@@ -163,7 +163,7 @@ main {
   padding: var(--space-4);
 }
 
-.start-button {
+.button {
   text-transform: uppercase;
   padding: var(--space-3) var(--space-10);
   border-radius: var(--radius-md);
@@ -172,7 +172,24 @@ main {
   cursor: pointer;
   transition: background 0.2s ease-out;
 
-  &:hover {
-    background-color: var(--success-glow);
+  &.success {
+    border-color: var(--success);
+    &:hover {
+      background-color: var(--success-glow);
+    }
+  }
+
+  &.danger {
+    border-color: var(--danger);
+    &:hover {
+      background-color: var(--danger-glow);
+    }
+  }
+
+  &.info {
+    border-color: var(--info);
+    &:hover {
+      background-color: var(--info-glow);
+    }
   }
 }

@@ -3,7 +3,8 @@ import { useScheduler } from './SchedulingContext';
 import '@/styles/table.css';
 
 export default function ProcessTable({}: {}) {
-   const { processes, addProcess, removeProcess, algorithm, started } = useScheduler();
+   const { state, addProcess, removeProcess, algorithm, started } = useScheduler();
+   const processes = state?.processes ?? [];
    const [visibleForm, setVisibleForm] = useState(false);
    const [form, setForm] = useState<Process>({
       arrivalTime: 0,
@@ -21,7 +22,7 @@ export default function ProcessTable({}: {}) {
 
    function submitForm() {
       if (form.arrivalTime < 0 || form.burstTime <= 0) return;
-      addProcess(form);
+      addProcess({ ...form, remainingTime: form.burstTime });
       setVisibleForm(false);
    }
 
