@@ -45,40 +45,36 @@ const GanttChart: React.FC = () => {
             </div>
             
             <div className="gantt-body">
-               {state.processes.map((process) => (
-                  <div key={process.pid} className="process-row">
-                     <div className="process-label">P{process.pid}</div>
-                     <div className="timeline-row">
-                        <div className="timeline-background">
-                           {Array.from({ length: maxTime }, (_, i) => (
-                              <div key={i} className="time-unit" />
-                           ))}
-                        </div>
-                        <div className="timeline-segments">
-                           {state.timeline
-                              .filter(segment => segment.pid === process.pid)
-                              .map((segment, index) => (
-                                 <div
-                                    key={index}
-                                    className="timeline-segment"
-                                    style={{
-                                       left: `${segment.from * 40}px`,
-                                       width: `${(segment.to - segment.from) * 40}px`,
-                                       backgroundColor: getProcessColor(segment.pid),
-                                    }}
-                                    title={`Process ${segment.pid}: ${segment.from} - ${segment.to}`}
-                                 >
-                                    {(segment.to - segment.from) > 1 && (
-                                       <span className="segment-label">
-                                          {segment.to - segment.from}
-                                       </span>
-                                    )}
-                                 </div>
-                              ))}
-                        </div>
+               <div className="process-row">
+                  <div className="process-label">CPU</div>
+                  <div className="timeline-row">
+                     <div className="timeline-background">
+                        {Array.from({ length: maxTime }, (_, i) => (
+                           <div key={i} className="time-unit" />
+                        ))}
+                     </div>
+                     <div className="timeline-segments">
+                        {state.timeline.map((segment, index) => (
+                           <div
+                              key={index}
+                              className="timeline-segment"
+                              style={{
+                                 left: `${segment.from * 40}px`,
+                                 width: `${(segment.to - segment.from) * 40}px`,
+                                 backgroundColor: getProcessColor(segment.pid),
+                              }}
+                              title={`Process ${segment.pid}: ${segment.from} - ${segment.to}`}
+                           >
+                              {(segment.to - segment.from) > 1 && (
+                                 <span className="segment-label">
+                                    P{segment.pid}
+                                 </span>
+                              )}
+                           </div>
+                        ))}
                      </div>
                   </div>
-               ))}
+               </div>
             </div>
          </div>
          

@@ -59,8 +59,7 @@
 }
 
 .gantt-body {
-   max-height: 400px;
-   overflow-y: auto;
+   overflow-x: auto;
 }
 
 .process-row {
