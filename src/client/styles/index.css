@@ -1,6 +1,6 @@
 /* ===== CSS Reset ===== */
 
-@import './gantt.css';
+@import "./gantt.css";
 
 /* Remove default margin, padding, and border */
 * {
@@ -163,6 +163,11 @@ main {
 
 .panel__body {
   padding: var(--space-4);
+}
+
+.flex {
+  display: flex;
+  gap: var(--space-4);
 }
 
 .button {

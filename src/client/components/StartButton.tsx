@@ -17,14 +17,14 @@ export default function StartButton() {
                Pause
             </button>
          ) : (
-            <>
+            <div className="flex">
                <button className="button success" onClick={start}>
                   {paused ? 'Resume' : 'Start'}
                </button>
                <button className="button info" onClick={runToEnd}>
                   Run Without Live
                </button>
-            </>
+            </div>
          )}
       </>
    );

@@ -22,7 +22,11 @@ export default function ProcessTable({}: {}) {
 
    function submitForm() {
       if (form.arrivalTime < 0 || form.burstTime <= 0) return;
-      addProcess({ ...form, remainingTime: form.burstTime });
+      addProcess({
+         ...form,
+         remainingTime: form.burstTime,
+         arrivalTime: started && state ? state.currentTime : form.arrivalTime,
+      });
       setVisibleForm(false);
    }
 
@@ -70,14 +74,18 @@ export default function ProcessTable({}: {}) {
                      <tr key={`P${processes.length}`} className="formRow">
                         <th scope="row">P{processes.length}</th>
                         <th>
-                           <input
-                              type="number"
-                              name="arrivalTime"
-                              id="arrivalTime"
-                              min={1}
-                              value={form.arrivalTime}
-                              onChange={handleChange}
-                           />
+                           {started && state ? (
+                              state.currentTime
+                           ) : (
+                              <input
+                                 type="number"
+                                 name="arrivalTime"
+                                 id="arrivalTime"
+                                 min={1}
+                                 value={form.arrivalTime}
+                                 onChange={handleChange}
+                              />
+                           )}
                         </th>
                         <th>
                            <input
