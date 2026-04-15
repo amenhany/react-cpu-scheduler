@@ -8,10 +8,14 @@ export default function App() {
    return (
       <main>
          <SchedulingProvider>
-            <SchedulerConfig />
+            <div className="flex">
+               <div className="flex" style={{ flexDirection: 'column' }}>
+                  <SchedulerConfig />
+                  <StartButton />
+               </div>
+               <GanttChart />
+            </div>
             <ProcessTable />
-            <StartButton />
-            <GanttChart />
          </SchedulingProvider>
       </main>
    );

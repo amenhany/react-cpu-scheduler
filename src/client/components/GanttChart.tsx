@@ -1,7 +1,7 @@
-import React from 'react';
+import '@/styles/gantt.css';
 import { useScheduler } from './SchedulingContext';
 
-const GanttChart: React.FC = () => {
+export default function GanttChart() {
    const { state } = useScheduler();
 
    if (!state || state.timeline.length === 0) {
@@ -9,16 +9,27 @@ const GanttChart: React.FC = () => {
          <div className="gantt-chart-container">
             <h3>Execution Timeline</h3>
             <div className="gantt-chart-empty">
-               <p>No execution data available. Add processes and start scheduling to see the timeline.</p>
+               <p>
+                  No execution data available. Add processes and start scheduling to see
+                  the timeline.
+               </p>
             </div>
          </div>
       );
    }
 
-   const maxTime = Math.max(...state.timeline.map(segment => segment.to));
+   const maxTime = Math.max(...state.timeline.map((segment) => segment.to));
    const processColors = [
-      '#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6',
-      '#06b6d4', '#f97316', '#84cc16', '#ec4899', '#6366f1'
+      '#3b82f6',
+      '#ef4444',
+      '#10b981',
+      '#f59e0b',
+      '#8b5cf6',
+      '#06b6d4',
+      '#f97316',
+      '#84cc16',
+      '#ec4899',
+      '#6366f1',
    ];
 
    const getProcessColor = (pid: number) => {
@@ -34,7 +45,7 @@ const GanttChart: React.FC = () => {
          <h3>Execution Timeline</h3>
          <div className="gantt-chart">
             <div className="gantt-header">
-               <div className="process-label">Process</div>
+               <div className="process-label">Time</div>
                <div className="timeline-header">
                   {Array.from({ length: maxTime + 1 }, (_, i) => (
                      <div key={i} className="time-label">
@@ -43,10 +54,10 @@ const GanttChart: React.FC = () => {
                   ))}
                </div>
             </div>
-            
+
             <div className="gantt-body">
                <div className="process-row">
-                  <div className="process-label">CPU</div>
+                  <div className="process-label">Process</div>
                   <div className="timeline-row">
                      <div className="timeline-background">
                         {Array.from({ length: maxTime }, (_, i) => (
@@ -65,10 +76,8 @@ const GanttChart: React.FC = () => {
                               }}
                               title={`Process ${segment.pid}: ${segment.from} - ${segment.to}`}
                            >
-                              {(segment.to - segment.from) > 1 && (
-                                 <span className="segment-label">
-                                    P{segment.pid}
-                                 </span>
+                              {segment.to - segment.from > 1 && (
+                                 <span className="segment-label">P{segment.pid}</span>
                               )}
                            </div>
                         ))}
@@ -77,22 +86,24 @@ const GanttChart: React.FC = () => {
                </div>
             </div>
          </div>
-         
+
          <div className="gantt-legend">
             <h4>Legend:</h4>
             <div className="legend-items">
                {state.processes.map((process) => (
                   <div key={process.pid} className="legend-item">
-                     <div 
-                        className="legend-color" 
+                     <div
+                        className="legend-color"
                         style={{ backgroundColor: getProcessColor(process.pid) }}
                      />
-                     <span>P{process.pid} (Burst: {process.burstTime})</span>
+                     <span>
+                        P{process.pid} (Burst: {process.burstTime})
+                     </span>
                   </div>
                ))}
             </div>
          </div>
-         
+
          <div className="gantt-stats">
             <h4>Statistics:</h4>
             <div className="stats-grid">
@@ -112,6 +123,4 @@ const GanttChart: React.FC = () => {
          </div>
       </div>
    );
-};
-
-export default GanttChart;
+}

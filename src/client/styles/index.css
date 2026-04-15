@@ -1,7 +1,5 @@
 /* ===== CSS Reset ===== */
 
-@import "./gantt.css";
-
 /* Remove default margin, padding, and border */
 * {
   margin: 0;
@@ -141,6 +139,7 @@ main {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   overflow: hidden;
+  margin: 20px 0;
 }
 
 .panel__header {

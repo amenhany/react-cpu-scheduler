@@ -51,12 +51,12 @@ export default function ProcessTable({}: {}) {
                         <th scope="row" className="pidCell">
                            P{i}
                         </th>
-                        <th className="numCell">{p.arrivalTime}</th>
-                        <th className="numCell">{p.burstTime}</th>
+                        <td className="numCell">{p.arrivalTime}</td>
+                        <td className="numCell">{p.burstTime}</td>
                         {(algorithm === 'pr' || algorithm === 'ppr') && (
-                           <th className="numCell">{p.priority}</th>
+                           <td className="numCell">{p.priority}</td>
                         )}
-                        <th>
+                        <td className={started ? '' : 'delCell'}>
                            {!started ? (
                               <button
                                  onClick={() => removeProcess(i)}
@@ -67,13 +67,13 @@ export default function ProcessTable({}: {}) {
                            ) : (
                               <>{p.remainingTime}</>
                            )}
-                        </th>
+                        </td>
                      </tr>
                   ))}
                   {visibleForm && (
                      <tr key={`P${processes.length}`} className="formRow">
                         <th scope="row">P{processes.length}</th>
-                        <th>
+                        <td>
                            {started && state ? (
                               state.currentTime
                            ) : (
@@ -86,8 +86,8 @@ export default function ProcessTable({}: {}) {
                                  onChange={handleChange}
                               />
                            )}
-                        </th>
-                        <th>
+                        </td>
+                        <td>
                            <input
                               type="number"
                               name="burstTime"
@@ -96,9 +96,9 @@ export default function ProcessTable({}: {}) {
                               value={form.burstTime}
                               onChange={handleChange}
                            />
-                        </th>
+                        </td>
                         {(algorithm === 'pr' || algorithm === 'ppr') && (
-                           <th>
+                           <td>
                               <input
                                  type="number"
                                  name="priority"
@@ -106,16 +106,16 @@ export default function ProcessTable({}: {}) {
                                  value={form.priority}
                                  onChange={handleChange}
                               />
-                           </th>
+                           </td>
                         )}
-                        <th>
+                        <td>
                            <button
                               onClick={() => setVisibleForm(false)}
                               className="delete-button"
                            >
                               ✖︎
                            </button>
-                        </th>
+                        </td>
                      </tr>
                   )}
                </tbody>

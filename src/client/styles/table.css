@@ -37,12 +37,16 @@ table thead th {
   white-space: nowrap;
 }
 
+table tbody td {
+  text-align: center;
+}
+
 /* PID column narrower */
 table thead th:first-child {
   width: 60px;
 }
 /* Action column */
-table thead th:last-child {
+.delCell {
   width: 44px;
 }
 
