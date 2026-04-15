@@ -10,6 +10,7 @@ type SchedulingContextType = {
    setQuantum: React.Dispatch<React.SetStateAction<number>>;
    started: boolean;
    paused: boolean;
+   isFinished: boolean;
 
    // scheduler controls
    start: () => void;
@@ -30,6 +31,7 @@ const SchedulingContext = createContext<SchedulingContextType>({
    setQuantum: () => {},
    started: false,
    paused: false,
+   isFinished: false,
 
    start: () => {},
    stop: () => {},
@@ -53,6 +55,8 @@ export const SchedulingProvider: React.FC<{ children: React.ReactNode }> = ({
    const [started, setStarted] = useState(false);
    const [paused, setPaused] = useState(false);
 
+   const isFinished = state?.processes.every((p) => p.remainingTime <= 0) ?? false;
+
    useEffect(() => {
       window.api.initScheduler();
       return window.api.subscribeScheduler(setState);
@@ -65,6 +69,10 @@ export const SchedulingProvider: React.FC<{ children: React.ReactNode }> = ({
    useEffect(() => {
       window.api.setSchedulingQuantum(quantum);
    }, [quantum]);
+
+   useEffect(() => {
+      if (isFinished) setPaused(true);
+   }, [isFinished]);
 
    const start = () => {
       setStarted(true);
@@ -102,6 +110,7 @@ export const SchedulingProvider: React.FC<{ children: React.ReactNode }> = ({
             setQuantum,
             started,
             paused,
+            isFinished,
 
             start,
             stop,

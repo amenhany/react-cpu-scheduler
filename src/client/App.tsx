@@ -9,7 +9,7 @@ export default function App() {
       <main>
          <SchedulingProvider>
             <div className="flex">
-               <div className="flex" style={{ flexDirection: 'column' }}>
+               <div className="flex col">
                   <SchedulerConfig />
                   <StartButton />
                </div>

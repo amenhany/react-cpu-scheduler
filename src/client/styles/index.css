@@ -169,6 +169,14 @@ main {
   gap: var(--space-4);
 }
 
+.col {
+  flex-direction: column;
+}
+
+.button-wrapper {
+  margin-bottom: 20px;
+}
+
 .button {
   text-transform: uppercase;
   padding: var(--space-3) var(--space-10);

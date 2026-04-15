@@ -1,8 +1,7 @@
 import { useScheduler } from './SchedulingContext';
 
 export default function StartButton() {
-   const { started, start, stop, paused, runToEnd, state, reset } = useScheduler();
-   const isFinished = state?.processes.every((p) => p.remainingTime <= 0) ?? false;
+   const { started, start, stop, paused, runToEnd, isFinished, reset } = useScheduler();
 
    if (isFinished)
       return (
@@ -13,18 +12,18 @@ export default function StartButton() {
    return (
       <>
          {started && !paused ? (
-            <button className="button info" onClick={stop}>
+            <button className="button info button-wrapper" onClick={stop}>
                Pause
             </button>
          ) : (
-            <>
+            <div className="flex col button-wrapper">
                <button className="button success" onClick={start}>
                   {paused ? 'Resume' : 'Simulate'}
                </button>
                <button className="button info" onClick={runToEnd}>
                   Static Run
                </button>
-            </>
+            </div>
          )}
       </>
    );
