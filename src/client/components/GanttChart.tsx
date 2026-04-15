@@ -2,7 +2,7 @@ import '@/styles/gantt.css';
 import { useScheduler } from './SchedulingContext';
 
 export default function GanttChart() {
-   const { state } = useScheduler();
+   const { state, isFinished } = useScheduler();
 
    if (!state || state.timeline.length === 0) {
       return (
@@ -104,23 +104,25 @@ export default function GanttChart() {
             </div>
          </div>
 
-         <div className="gantt-stats">
-            <h4>Statistics:</h4>
-            <div className="stats-grid">
-               <div className="stat-item">
-                  <span className="stat-label">Average Waiting Time:</span>
-                  <span className="stat-value">{state.avgWait.toFixed(2)}</span>
-               </div>
-               <div className="stat-item">
-                  <span className="stat-label">Average Turnaround Time:</span>
-                  <span className="stat-value">{state.avgTurn.toFixed(2)}</span>
-               </div>
-               <div className="stat-item">
-                  <span className="stat-label">Total Time:</span>
-                  <span className="stat-value">{state.currentTime}</span>
+         {isFinished && (
+            <div className="gantt-stats">
+               <h4>Statistics:</h4>
+               <div className="stats-grid">
+                  <div className="stat-item">
+                     <span className="stat-label">Average Waiting Time:</span>
+                     <span className="stat-value">{state.avgWait.toFixed(2)}</span>
+                  </div>
+                  <div className="stat-item">
+                     <span className="stat-label">Average Turnaround Time:</span>
+                     <span className="stat-value">{state.avgTurn.toFixed(2)}</span>
+                  </div>
+                  <div className="stat-item">
+                     <span className="stat-label">Total Time:</span>
+                     <span className="stat-value">{state.currentTime}</span>
+                  </div>
                </div>
             </div>
-         </div>
+         )}
       </div>
    );
 }

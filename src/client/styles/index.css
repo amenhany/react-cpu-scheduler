@@ -169,6 +169,10 @@ main {
   gap: var(--space-4);
 }
 
+.container {
+  max-width: 80%;
+}
+
 .col {
   flex-direction: column;
 }

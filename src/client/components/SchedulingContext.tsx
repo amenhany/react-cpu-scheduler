@@ -93,6 +93,7 @@ export const SchedulingProvider: React.FC<{ children: React.ReactNode }> = ({
 
    const reset = () => {
       setStarted(false);
+      setPaused(false);
       window.api.initScheduler();
       setState(null);
       setAlgorithm('fcfs');

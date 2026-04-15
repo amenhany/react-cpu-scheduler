@@ -8,7 +8,7 @@ export default function App() {
    return (
       <main>
          <SchedulingProvider>
-            <div className="flex">
+            <div className="flex container">
                <div className="flex col">
                   <SchedulerConfig />
                   <StartButton />
